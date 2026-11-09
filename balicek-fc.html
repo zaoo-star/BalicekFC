@@ -38,7 +38,7 @@ h2{font-size:34px;margin:12px 0 8px;line-height:1.1}
 .menu{grid-template-columns:1fr 1fr 1fr!important}
 .mbtn{border-radius:var(--r);padding:10px 4px;font-size:22px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:96px;color:#10200f}
 .mbtn .ic{font-size:40px;line-height:1.1}
-.mbtn[data-go=league]{grid-column:span 2;flex-direction:row;gap:10px;font-size:28px}
+
 .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 10px}
 .tab{background:var(--panel);border-radius:var(--r);font-size:22px;font-weight:800;min-height:54px}
 .tab.on{background:var(--acc);color:var(--accText)}
@@ -162,6 +162,23 @@ td b{font-weight:800}
 .cupStep.ko{background:#c81e2b}
 .pens{font-size:22px;font-weight:800;line-height:1.4}
 .backup{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.dBox{background:var(--panel);border-radius:var(--r);padding:14px;margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.dT{font-size:24px;font-weight:800}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#h2h{margin-top:14px;font-size:18px;font-weight:700}
+#h2h .hr{display:flex;justify-content:space-between;background:var(--panel);border-radius:var(--r);padding:8px 14px;margin-top:6px}
+.code{font-size:84px;font-weight:800;letter-spacing:10px;color:var(--acc);line-height:1}
+.digits{display:flex;gap:10px}
+.digits span{width:62px;height:76px;border-radius:14px;background:var(--panel);font-size:52px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.pad{display:grid;grid-template-columns:repeat(3,84px);gap:10px}
+.pad button{height:72px;border-radius:var(--r);background:var(--panel2);font-size:34px;font-weight:800}
+.trH{font-size:22px;font-weight:800;margin-top:10px}
+.trRow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:420px}
+.trRow .tslot{aspect-ratio:512/720;border:4px dashed rgba(255,255,255,.4);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;background:none;position:relative;padding:0}
+.trRow .tslot canvas{width:100%;display:block}
+.trRow .tslot.filled{border:0}
+.trRow .x{position:absolute;top:-8px;right:-8px;background:#c81e2b;color:#fff;border-radius:50%;width:30px;height:30px;font-size:18px;display:flex;align-items:center;justify-content:center}
+#trOk.on{background:#46d16f}
 .subPanel{justify-content:flex-start;overflow-y:auto;padding-top:calc(env(safe-area-inset-top) + 20px)}
 .subCols{display:flex;flex-direction:column;gap:14px;width:100%;max-width:560px;text-align:left}
 .subH{font-size:20px;font-weight:800;margin-bottom:6px}
@@ -212,6 +229,7 @@ td b{font-weight:800}
       <button class="mbtn" style="background:#ff8a4c" data-go="team"><span class="ic">👕</span>Tým</button>
       <button class="mbtn" style="background:#c9a7ff" data-go="market"><span class="ic">🛒</span>Trh</button>
       <button class="mbtn" style="background:#46d16f" data-go="league"><span class="ic">⚽</span>Liga</button>
+      <button class="mbtn" style="background:#ff6b8b" data-go="duel"><span class="ic">🤝</span>Brácha</button>
     </div>
   </div>
 </section>
@@ -245,6 +263,27 @@ td b{font-weight:800}
   <h2>Trh hráčů</h2>
   <div class="tabs"><button class="tab on" data-tab="buy">🛒 Koupit</button><button class="tab" data-tab="sell">💰 Prodat dvojky</button></div>
   <div id="mkBody"></div>
+</section>
+
+<section id="duel" class="screen solid">
+  <div class="top"><button class="back" data-go="home">← Zpět</button><div class="coins ml">🪙 <b class="cv">0</b></div></div>
+  <h2>Hra s bráchou</h2>
+  <input id="myName" class="tname" maxlength="14" placeholder="Tvoje jméno" aria-label="Tvoje jméno">
+  <div class="dBox"><div class="dT">⚽ Zápas proti bráchovi</div><div class="small">Každý hraje na svém tabletu se svým týmem. Oba uvidíte stejný zápas.</div>
+    <div class="row2"><button class="btn" id="dMatchNew">Vyzvat</button><button class="btn sec" id="dMatchJoin">Mám kód</button></div></div>
+  <div class="dBox"><div class="dT">🔄 Výměna karet</div><div class="small">Měnit se dají jen dvojky. Výměna proběhne, až oba ťuknete na „Souhlasím“.</div>
+    <div class="row2"><button class="btn" id="dTradeNew">Začít výměnu</button><button class="btn sec" id="dTradeJoin">Mám kód</button></div></div>
+  <div id="h2h"></div>
+  <div id="netWarn" class="small" style="margin-top:10px"></div>
+</section>
+
+<section id="trade" class="screen solid">
+  <div class="top"><button class="back" id="trBack">← Konec výměny</button><div class="coins ml">🪙 <b class="cv">0</b></div></div>
+  <h2 id="trTitle">Výměna</h2>
+  <div class="trH">Ty dáš</div><div id="trMine" class="trRow"></div>
+  <div class="trH">Dostaneš</div><div id="trTheirs" class="trRow"></div>
+  <div id="trStatus" class="rw" style="margin:10px 0;font-size:20px"></div>
+  <button id="trOk" class="btn">✅ Souhlasím</button>
 </section>
 
 <section id="team" class="screen solid">
@@ -286,6 +325,12 @@ td b{font-weight:800}
   <div class="stage"><canvas id="detailCv" width="512" height="720"></canvas></div>
   <div id="detailInfo"></div>
   <div class="mrow"><button id="upBtn" class="btn"></button><button id="sellBtn" class="btn sec"></button><button id="detailClose" class="btn sec">Zavřít</button></div>
+</div>
+
+<div id="lobby" class="modal"></div>
+<div id="tpick" class="modal">
+  <div class="top" style="width:100%;max-width:640px"><h2 style="margin:0">Vyber dvojku</h2><button id="tpClose" class="back ml">Zavřít</button></div>
+  <div id="tpGrid" class="grid"></div>
 </div>
 
 <div id="picker" class="modal">
@@ -387,11 +432,11 @@ const OPP=[
 const MYCOL='#2f8cff';
 
 /* ================= SAVE ================= */
-const SKEY='balicekfc_v1';
+const SKEY='balicekfc_v1'+(new URLSearchParams(location.search).get('save')||'');
 let S;
 function newTable(){const t={};for(let i=0;i<7;i++)t[i]={z:0,v:0,r:0,p:0,gf:0,ga:0,b:0};t.me={z:0,v:0,r:0,p:0,gf:0,ga:0,b:0};return t;}
 function defState(){
- const st={coins:150,owned:{},team:[null,null,null,null,null],bench:[null,null,null],market:null,up:{},claimed:{},cup:null,cups:0,teamName:'Můj tým',season:1,round:0,table:newTable(),trophies:0,freeAt:0,mute:false,lastPlace:0};
+ const st={coins:150,owned:{},team:[null,null,null,null,null],bench:[null,null,null],market:null,myName:'',h2h:{},up:{},claimed:{},cup:null,cups:0,teamName:'Můj tým',season:1,round:0,table:newTable(),trophies:0,freeAt:0,mute:false,lastPlace:0};
  SLOTS.forEach((pos,i)=>{
   const c=PLAYERS.filter(p=>p.rar==='b'&&p.pos===pos&&!st.team.includes(p.id)).sort((a,b)=>a.ovr-b.ovr)[0];
   st.owned[c.id]=(st.owned[c.id]||0)+1; st.team[i]=c.id;
@@ -703,8 +748,8 @@ const SLOT_HOME=[[0,.8],[-2.4,4.6],[2.4,4.6],[0,9],[0,13]];
 const SLOT_ROLE=['BR','OB','OB','ZÁ','ÚT'];
 const KO_HOME=[[0,.8],[-2.6,4],[2.6,4],[-1.6,8.4],[0,9.55]];
 function penFor(role,pos){return role===pos?0:(role==='BR'||pos==='BR')?25:8;}
-function createMatch(teams,T=150){
- const rnd=Math.random,cl=(v,a,c)=>Math.max(a,Math.min(c,v)),hyp=Math.hypot;
+function createMatch(teams,T=150,rng=Math.random){
+ const rnd=rng,cl=(v,a,c)=>Math.max(a,Math.min(c,v)),hyp=Math.hypot;
  const dir=t=>t===0?-1:1,ownZ=t=>t===0?FL:-FL,dOf=(t,z)=>(z-ownZ(t))*dir(t),zOf=(t,d)=>ownZ(t)+dir(t)*d,xw=(t,x)=>t===0?x:-x;
  const E={t:0,T,half:1,state:'dead',score:[0,0],ev:[],paused:false,rs:null,scorer:-1,wait:0,koTeam:0,subsLeft:[3,3],oppBench:[],
   stats:{fouls:[0,0],corners:[0,0],shots:[0,0],yellows:[0,0],saves:[0,0],throws:[0,0],fks:[0,0],pens:[0,0],posts:[0,0]}};
@@ -1037,16 +1082,16 @@ function startMatch(mode='league'){
  const E=createMatch([{players:us},{players:od.players}],150);E.oppBench=od.bench;
  const meshes=E.pl.map(p=>{const m=makePlayer(p.team===0?MYCOL:opp.c,SKIN[p.d.look?p.d.look.skin:1],p.gk);m.position.set(p.x,0,p.z);root.add(m);return m;});
  const ref=makePlayer('#15151a',SKIN[1],false);ref.position.set(3,0,0);root.add(ref);
- MT={E,root,meshes,ref,opp,oi,mode,acc:0,speed:1,ended:false,outIds:[],selOut:-1,half:false,banT:0,clock:0,buf:[],goalWait:0,goalClock:0,replay:null};
+ MT={E,root,meshes,ref,opp,oi,mode,myT:0,flip:1,acc:0,speed:1,ended:false,outIds:[],selOut:-1,half:false,banT:0,clock:0,buf:[],goalWait:0,goalClock:0,replay:null};
  $('#replayTag').classList.remove('on');$('#match').classList.remove('replaying');
  $('#mHome').textContent=S.teamName;$('#mAway').textContent=opp.n;$('#mScore').textContent='0 : 0';$('#mMin').textContent="0'";$('#ticker').innerHTML='';
- $('#mEnd').classList.remove('on');$('#subPanel').classList.remove('on');$('#speedBtn').textContent='⏩ 1×';
+ $('#mEnd').classList.remove('on');$('#subPanel').classList.remove('on');$('#speedBtn').textContent='⏩ 1×';$('#subBtn').style.display='';
  M.camera.position.set(0,10,17);
  show('match');sfx.whistle();
 }
 const hyp=Math.hypot;
 M.update=(dt,t)=>{
- if(!MT)return;const E=MT.E,b=E.ball;
+ if(!MT)return;const E=MT.E,b=E.ball,F=MT.flip||1,T=MT.myT||0;
  if(MT.replay){replayUpdate(dt,t);return;}
  if(!MT.ended&&!E.paused&&E.state!=='half'&&E.state!=='over'){MT.acc+=dt*MT.speed;let n=0;while(MT.acc>=1/60&&n<16){E.step(1/60);MT.acc-=1/60;n++;MT.clock+=1/60;}if(n>=16)MT.acc=0;
   if(n){MT.buf.push({t:MT.clock,p:E.pl.map(p=>[p.x,p.z,p.face,p.run,p.dive,p.diveDir]),b:[b.x,b.y,b.z]});while(MT.buf.length&&MT.buf[0].t<MT.clock-6)MT.buf.shift();}
@@ -1057,29 +1102,31 @@ M.update=(dt,t)=>{
  let bx=b.x,by=b.y,bz=b.z;
  if(E.state==='dead'&&E.rs&&E.rs.kind==='throw'){const tk=E.rs.taker;if(hyp(tk.x-tk.tx,tk.z-tk.tz)<.7){bx=tk.x;by=1.95;bz=tk.z;}}
  placeBall(bx,by,bz,b.vx,b.vz,sdt);
- const r=MT.ref,rx=clamp(b.x+2.2,-6.3,6.3),rz=clamp(b.z+1.2,-9,9),dx=rx-r.position.x,dz=rz-r.position.z,dd=hyp(dx,dz);
+ const fx=F*bx,fz=F*bz;
+ const r=MT.ref,rx=clamp(fx+2.2,-6.3,6.3),rz=clamp(fz+1.2,-9,9),dx=rx-r.position.x,dz=rz-r.position.z,dd=hyp(dx,dz);
  if(dd>.2&&sdt>0){const st=Math.min(dd,4*sdt);r.position.x+=dx/dd*st;r.position.z+=dz/dd*st;r.rotation.y=Math.atan2(dx,dz);r.userData.ph+=st*7;}
  r.userData.legs[0].rotation.x=Math.sin(r.userData.ph)*.6*(dd>.2?1:0);r.userData.legs[1].rotation.x=-r.userData.legs[0].rotation.x;
- const a=M.camera.aspect,cz=clamp(bz,-7.5,7.5),base=a<1?13+(1-a)*9:12;
- const want=new THREE.Vector3(bx*.5,base*.62,cz*.55+base);
- M.camera.position.lerp(want,Math.min(1,dt*2));M.camera.lookAt(bx*.6,0,cz*.8-1.5);
+ const a=M.camera.aspect,cz=clamp(fz,-7.5,7.5),base=a<1?13+(1-a)*9:12;
+ const want=new THREE.Vector3(fx*.5,base*.62,cz*.55+base);
+ M.camera.position.lerp(want,Math.min(1,dt*2));M.camera.lookAt(fx*.6,0,cz*.8-1.5);
  $('#mMin').textContent=E.state==='half'?'Poločas':E.minute()+"'";
- const tired=E.pl.some(p=>p.team===0&&!p.off&&p.stam<.5);$('#subBtn').classList.toggle('warn',tired&&E.subsLeft[0]>0);
- $('#subBtn').textContent=`🔄 Střídání ${E.subsLeft[0]}`;
+ const tired=E.pl.some(p=>p.team===T&&!p.off&&p.stam<.5);$('#subBtn').classList.toggle('warn',tired&&E.subsLeft[T]>0);
+ $('#subBtn').textContent=`🔄 Střídání ${E.subsLeft[T]}`;
 };
 function poseMesh(i,x,z,face,run,dive,diveDir,off,cel,dt,sdt,t){
- const p=MT.E.pl[i],m=MT.meshes[i];m.visible=!off;if(off)return;const u=m.userData;
- let da=face-m.rotation.y;da=Math.atan2(Math.sin(da),Math.cos(da));m.rotation.y+=da*Math.min(1,dt*12);
+ const p=MT.E.pl[i],m=MT.meshes[i],F=MT.flip||1;m.visible=!off;if(off)return;const u=m.userData;
+ const fa=F<0?face+Math.PI:face;
+ let da=fa-m.rotation.y;da=Math.atan2(Math.sin(da),Math.cos(da));m.rotation.y+=da*Math.min(1,dt*12);
  const r=Math.min(1,run/4);u.ph+=run*sdt*3.2;u.legs[0].rotation.x=Math.sin(u.ph)*.85*r;u.legs[1].rotation.x=-Math.sin(u.ph)*.85*r;
- const dv=p.gk&&dive>0?Math.sin(Math.min(1,(.75-dive)/.75)*Math.PI):0;
- m.position.set(x+(p.gk?diveDir*dv*.45:0),cel?Math.abs(Math.sin(t*9+i))*.45:-dv*.35,z);
- m.rotation.z=-(diveDir*Math.cos(m.rotation.y))*1.25*dv;
+ const dv=p.gk&&dive>0?Math.sin(Math.min(1,(.75-dive)/.75)*Math.PI):0,dd=diveDir*F;
+ m.position.set(F*x+(p.gk?dd*dv*.45:0),cel?Math.abs(Math.sin(t*9+i))*.45:-dv*.35,F*z);
+ m.rotation.z=-(dd*Math.cos(m.rotation.y))*1.25*dv;
 }
-function placeBall(bx,by,bz,vx,vz,sdt){M.ball.position.set(bx,by,bz);M.ball.rotation.x+=vz*sdt/.17;M.ball.rotation.z-=vx*sdt/.17;M.ballSh.position.set(bx,.016,bz);M.ballSh.scale.setScalar(Math.max(.4,1-by*.25));}
+function placeBall(bx,by,bz,vx,vz,sdt){const F=MT.flip||1;bx*=F;bz*=F;vx*=F;vz*=F;M.ball.position.set(bx,by,bz);M.ball.rotation.x+=vz*sdt/.17;M.ball.rotation.z-=vx*sdt/.17;M.ballSh.position.set(bx,.016,bz);M.ballSh.scale.setScalar(Math.max(.4,1-by*.25));}
 function startReplay(){
  const g=MT.goalClock,fr=MT.buf.filter(f=>f.t>=g-3.6&&f.t<=g+1.1);if(fr.length<20)return;
  MT.E.paused=true;const last=fr[fr.length-1];
- MT.replay={fr,t:fr[0].t,i:0,side:Math.sign(MT.goalZ||last.b[2])||-1,prev:null};
+ MT.replay={fr,t:fr[0].t,i:0,side:(Math.sign(MT.goalZ||last.b[2])||-1)*(MT.flip||1),prev:null};
  const s=MT.replay.side;M.camera.position.set(9.5,5.6,s*7);MT.ref.visible=false;
  $('#replayTag').classList.add('on');$('#match').classList.add('replaying');$('#goalBig').classList.remove('on');$('#evBig').className='';
 }
@@ -1091,19 +1138,19 @@ function replayUpdate(dt,t){
  A.p.forEach((pa,i)=>{const pb=B.p[i],df=Math.atan2(Math.sin(pb[2]-pa[2]),Math.cos(pb[2]-pa[2]));poseMesh(i,L(pa[0],pb[0]),L(pa[1],pb[1]),pa[2]+df*k,L(pa[3],pb[3]),L(pa[4],pb[4]),pb[5],MT.E.pl[i].off,false,dt,sdt,t);});
  const bx=L(A.b[0],B.b[0]),by=L(A.b[1],B.b[1]),bz=L(A.b[2],B.b[2]);
  const vx=R.prev&&sdt>0?(bx-R.prev[0])/sdt:0,vz=R.prev&&sdt>0?(bz-R.prev[1])/sdt:0;R.prev=[bx,bz];placeBall(bx,by,bz,vx,vz,sdt);
- const s=R.side,want=new THREE.Vector3(clamp(bx,-4,4)*.3+9.5,5.6,clamp(bz,-9,9)*.7+s*1.8);
- M.camera.position.lerp(want,Math.min(1,dt*2.5));M.camera.lookAt(bx,.5,bz);
+ const F=MT.flip||1,fx=F*bx,fz=F*bz,s=R.side,want=new THREE.Vector3(clamp(fx,-4,4)*.3+9.5,5.6,clamp(fz,-9,9)*.7+s*1.8);
+ M.camera.position.lerp(want,Math.min(1,dt*2.5));M.camera.lookAt(fx,.5,fz);
  if(R.t>=fr[fr.length-1].t)endReplay();
 }
 M.fit=a=>{M.camera.aspect=a;M.camera.updateProjectionMatrix();};
 function banner(txt,ms=1100,cls=''){const el=$('#evBig');el.textContent=txt;el.className='on '+cls;clearTimeout(MT.banT);MT.banT=setTimeout(()=>{el.className='';},ms/Math.max(1,MT.speed*.6));}
 function tick(txt,dim){const T=$('#ticker'),d=document.createElement('div');d.textContent=txt;if(dim)d.style.color='#b9cbc1';T.prepend(d);while(T.children.length>4)T.lastChild.remove();}
 function onEv(e){
- const us=e.team===0,m=e.min+"'";
+ const us=e.team===(MT.myT||0),m=e.min+"'";
  switch(e.type){
-  case 'goal':{MT.goalClock=MT.clock;MT.goalWait=1.3;MT.goalZ=MT.E.ball.z;$('#mScore').textContent=MT.E.score.join(' : ');tick(`⚽ ${m} ${e.own?'vlastní gól ('+e.who+')':e.who}`,!us);
+  case 'goal':{MT.goalClock=MT.clock;MT.goalWait=1.3;MT.goalZ=MT.E.ball.z;$('#mScore').textContent=scoreTxt();tick(`⚽ ${m} ${e.own?'vlastní gól ('+e.who+')':e.who}`,!us);
    const g=$('#goalBig');g.textContent=us?'GÓÓÓL! 🎉':'Gól soupeře';g.classList.add('on');setTimeout(()=>g.classList.remove('on'),1800);
-   if(us){burst(M.scene,new THREE.Vector3(MT.E.ball.x,1.2,MT.E.ball.z),null,260,7,true);sfx.goal();if(navigator.vibrate)navigator.vibrate(150);}else sfx.whistle();break;}
+   if(us){burst(M.scene,new THREE.Vector3(MT.E.ball.x*(MT.flip||1),1.2,MT.E.ball.z*(MT.flip||1)),null,260,7,true);sfx.goal();if(navigator.vibrate)navigator.vibrate(150);}else sfx.whistle();break;}
   case 'corner':banner('🚩 ROH');sfx.whistle();break;
   case 'throw':banner('AUT',800,'sm');break;
   case 'freekick':banner('PŘÍMÝ KOP',1200);break;
@@ -1124,23 +1171,30 @@ function onEv(e){
 function openSubs(half){if(!MT||MT.ended)return;const E=MT.E;E.paused=true;MT.selOut=-1;MT.half=half;renderSubs();$('#subPanel').classList.add('on');}
 function subRow(d,stam,k,sel,pos,dis){const pct=Math.round(stam*100),col=stam>.7?'#46d16f':stam>.45?'#ffd23f':'#ff5a5a';
  return `<button class="subRow${sel?' sel':''}" data-k="${k}"${dis?' disabled':''}><span class="sp">${pos}</span><span class="sn">${esc(d.name)}<small>${starsTxt(d.ovr)} · ${d.ovr}</small></span><span class="bat" aria-label="Síly ${pct} %"><i style="width:${pct}%;background:${col}"></i></span></button>`;}
+function scoreTxt(){const T=MT.myT||0;return MT.E.score[T]+' : '+MT.E.score[1-T];}
 function renderSubs(){
- const E=MT.E,P=$('#subPanel'),left=E.subsLeft[0];
- const field=E.pl.filter(p=>p.team===0&&!p.off);
- const bench=S.bench.filter(id=>id!=null&&!MT.outIds.includes(id)&&!E.pl.some(p=>p.team===0&&p.d.id===id));
- P.innerHTML=`<h2 style="margin:0">${MT.half?'Poločas '+E.score.join(' : '):'Střídání'}</h2>
+ const E=MT.E,P=$('#subPanel'),T=MT.myT||0,left=E.subsLeft[T],duel=MT.mode==='duel';
+ if(MT.waitHalf){P.innerHTML=`<h2 style="margin:0">Poločas ${scoreTxt()}</h2><div class="rw" style="margin-top:20px">⏳ Čekám, až bude připravený i ${esc(MT.oppName)}…</div>${MT.oppGone?'<div class="small">Brácha se asi odpojil.</div><button class="btn sec" id="duelQuit">Ukončit zápas</button>':''}`;if($('#duelQuit'))$('#duelQuit').onclick=quitDuel;return;}
+ const field=E.pl.filter(p=>p.team===T&&!p.off);
+ const bench=duel?MT.myBench.map((d,bi)=>({d,k:'b'+bi})).filter(x=>!MT.usedBench.has(x.k))
+  :S.bench.filter(id=>id!=null&&!MT.outIds.includes(id)&&!E.pl.some(p=>p.team===0&&p.d.id===id)).map(id=>({d:PLAYERS[id],k:'b'+id}));
+ P.innerHTML=`<h2 style="margin:0">${MT.half?'Poločas '+scoreTxt():'Střídání'}</h2>
   <div class="small">${left>0?(MT.selOut<0?'1) Ťukni na hráče, který má málo sil.':'2) Teď ťukni na náhradníka z lavičky.'):'Už nemůžeš střídat.'} Zbývá střídání: <b>${left}</b></div>
   <div class="subCols"><div><div class="subH">Na hřišti</div>${field.map(p=>subRow(p.d,p.stam,'f'+p.slot,MT.selOut===p.slot,SLOTS[p.slot],left<=0)).join('')}</div>
-  <div><div class="subH">Lavička</div>${bench.length?bench.map(id=>subRow(PLAYERS[id],1,'b'+id,false,PLAYERS[id].pos,left<=0||MT.selOut<0)).join(''):'<div class="small">Prázdná. Náhradníky přidáš v Týmu.</div>'}</div></div>
+  <div><div class="subH">Lavička</div>${bench.length?bench.map(x=>subRow(x.d,1,x.k,false,x.d.pos,left<=0||MT.selOut<0)).join(''):'<div class="small">Prázdná. Náhradníky přidáš v Týmu.</div>'}</div></div>
   <button class="btn" id="subDone">${MT.half?'▶ 2. poločas':'▶ Hrát dál'}</button>`;
  P.querySelectorAll('[data-k]').forEach(el=>el.onclick=()=>{
-  const k=el.dataset.k;if(E.subsLeft[0]<=0)return;
+  const k=el.dataset.k;if(E.subsLeft[T]<=0)return;
   if(k[0]==='f'){const s=+k.slice(1);MT.selOut=MT.selOut===s?-1:s;sfx.tap();renderSubs();return;}
   if(MT.selOut<0)return;
-  const id=+k.slice(1),slot=MT.selOut,idx=E.pl.findIndex(q=>q.team===0&&q.slot===slot),oldId=E.pl[idx].d.id;
-  if(E.sub(0,slot,PLAYERS[id])){if(oldId!=null)MT.outIds.push(oldId);MT.meshes[idx].userData.head.material.color.set(SKIN[PLAYERS[id].look.skin]);sfx.pop();MT.selOut=-1;while(E.ev.length)onEv(E.ev.shift());renderSubs();}
+  const slot=MT.selOut,idx=E.pl.findIndex(q=>q.team===T&&q.slot===slot),oldId=E.pl[idx].d.id;
+  const d=duel?MT.myBench[+k.slice(1)]:PLAYERS[+k.slice(1)];
+  if(E.sub(T,slot,d)){if(duel){MT.usedBench.add(k);MT.subLog.push({s:slot,b:+k.slice(1)});}else if(oldId!=null)MT.outIds.push(oldId);
+   MT.meshes[idx].userData.head.material.color.set(SKIN[d.look?d.look.skin:1]);sfx.pop();MT.selOut=-1;while(E.ev.length)onEv(E.ev.shift());renderSubs();}
  });
- $('#subDone').onclick=()=>{sfx.tap();P.classList.remove('on');if(!MT.replay)E.paused=false;if(E.state==='half'){E.resume();sfx.whistle();}MT.half=false;};
+ $('#subDone').onclick=()=>{sfx.tap();
+  if(duel&&E.state==='half'){MT.waitHalf=true;Net.set(`bfc/rooms/${MT.code}/half/${MT.role}`,{n:MT.subLog.length,l:MT.subLog.length?MT.subLog:0});renderSubs();duelCheck();return;}
+  P.classList.remove('on');if(!MT.replay)E.paused=false;if(E.state==='half'){E.resume();sfx.whistle();}MT.half=false;};
 }
 function applyRes(id,gf,ga){const r=S.table[id];r.z++;r.gf+=gf;r.ga+=ga;if(gf>ga){r.v++;r.b+=3;}else if(gf===ga){r.r++;r.b+=1;}else r.p++;}
 function quickGoals(sa,sb){const ev=simEvents(sa,sb);return [ev.filter(e=>e.us&&e.goal).length,ev.filter(e=>!e.us&&e.goal).length];}
@@ -1166,6 +1220,7 @@ function endCup(a,b,oi){
 function endMatch(){
  if(MT.ended)return;MT.ended=true;sfx.whistle();
  const [a,b]=MT.E.score,oi=MT.oi;
+ if(MT.mode==='duel'){endDuel();return;}
  if(MT.mode==='cup'){endCup(a,b,oi);return;}
  applyRes('me',a,b);applyRes(oi,b,a);
  const rest=[0,1,2,3,4,5,6].filter(i=>i!==oi).sort(()=>rnd()-.5);
@@ -1187,7 +1242,7 @@ function endMatch(){
 }
 
 /* ================= UI ================= */
-const screens=['home','shop','pack','collection','market','team','league','match'];
+const screens=['home','shop','pack','collection','market','team','league','match','duel','trade'];
 let cur=null;
 function show(id){
  screens.forEach(s=>$('#'+s).classList.toggle('on',s===id));
@@ -1197,6 +1252,7 @@ function show(id){
  if(id==='home'){refreshHomeCard();updGift();$('#trophN').textContent=S.trophies;}
  if(id==='shop')renderShop();
  if(id==='collection')renderCollection();
+ if(id==='duel')renderDuel();
  if(id==='market'){mkTab='buy';renderMarket();}
  if(id==='team')renderTeam();
  if(id==='league')renderLeague();
@@ -1360,7 +1416,7 @@ $('#skipBtn').onclick=()=>{sfx.tap();skipAll();};
 $('#packDone').onclick=()=>{sfx.tap();show('home');};
 $('#packAgain').onclick=()=>{sfx.tap();show('shop');};
 $('#speedBtn').onclick=e=>{if(!MT)return;MT.speed=MT.speed===1?2:MT.speed===2?4:1;e.target.textContent='⏩ '+MT.speed+'×';sfx.tap();};
-$('#subBtn').onclick=()=>{sfx.tap();if(MT&&!MT.ended&&!MT.replay&&MT.E.state!=='over')openSubs(false);};
+$('#subBtn').onclick=()=>{sfx.tap();if(MT&&MT.mode!=='duel'&&!MT.ended&&!MT.replay&&MT.E.state!=='over')openSubs(false);};
 $('#replaySkip').onclick=()=>{sfx.tap();endReplay();};
 $('#muteBtn').onclick=e=>{S.mute=!S.mute;save();e.target.textContent=S.mute?'🔇':'🔊';if(!S.mute)sfx.tap();};
 
@@ -1418,6 +1474,188 @@ setInterval(()=>{if(!$('#market').classList.contains('on')||mkTab!=='buy')return
 let sellArm=0;
 $('#colSellAll').onclick=e=>{const tot=dupTotal();if(!tot)return;if(Date.now()-sellArm<4000){sellAllDups();sellArm=0;renderCollection();}else{sellArm=Date.now();e.target.textContent=`Opravdu prodat? Ťukni znovu (+🪙 ${tot})`;setTimeout(()=>{if($('#collection').classList.contains('on'))updColSell();},4000);}};
 function updColSell(){const tot=dupTotal(),b=$('#colSellAll');b.style.display=tot?'':'none';b.textContent=`💰 Prodat všechny dvojky +🪙 ${tot}`;}
+
+/* ================= ONLINE (BRÁCHA) ================= */
+// Firebase Realtime Database – sem vlož config z Firebase konzole (Project settings → Your apps → Web app)
+const FB_CONFIG={apiKey:'',authDomain:'',databaseURL:'',projectId:'',appId:''};
+const FB_VER='10.12.2';
+const MOCK=new URLSearchParams(location.search).has('mock');
+const MK='bfc_mock',mockSubs=new Set();
+function mockRoot(){try{return JSON.parse(localStorage.getItem(MK))||{};}catch(e){return {};}}
+function mockGet(p){let o=mockRoot();for(const k of p.split('/')){if(o==null)return null;o=o[k];}return o===undefined?null:JSON.parse(JSON.stringify(o));}
+function mockSet(p,v){const root=mockRoot(),ks=p.split('/');let o=root;for(let i=0;i<ks.length-1;i++){if(typeof o[ks[i]]!=='object'||o[ks[i]]===null)o[ks[i]]={};o=o[ks[i]];}
+ if(v===null||v===undefined)delete o[ks[ks.length-1]];else o[ks[ks.length-1]]=JSON.parse(JSON.stringify(v));localStorage.setItem(MK,JSON.stringify(root));mockFire();}
+function mockOn(p,cb){const sb={p,cb,last:undefined};sb.f=()=>{if(!mockSubs.has(sb))return;const v=mockGet(p),j=JSON.stringify(v);if(j!==sb.last){sb.last=j;cb(v);}};mockSubs.add(sb);setTimeout(sb.f,0);return ()=>mockSubs.delete(sb);}
+function mockFire(){mockSubs.forEach(sb=>setTimeout(sb.f,0));}
+addEventListener('storage',e=>{if(e.key===MK)mockFire();});
+const Net={mode:null,
+ async init(){if(this.mode)return true;if(MOCK){this.mode='mock';return true;}if(!FB_CONFIG.databaseURL)return false;
+  try{const app=await import(`https://www.gstatic.com/firebasejs/${FB_VER}/firebase-app.js`),db=await import(`https://www.gstatic.com/firebasejs/${FB_VER}/firebase-database.js`);
+   this.fb=db;this.db=db.getDatabase(app.initializeApp(FB_CONFIG));this.mode='fb';return true;}catch(e){console.warn(e);return false;}},
+ r(p){return this.fb.ref(this.db,p);},
+ async get(p){if(this.mode==='mock')return mockGet(p);const sn=await this.fb.get(this.r(p));return sn.val();},
+ async set(p,v){if(this.mode==='mock')return mockSet(p,v);return this.fb.set(this.r(p),v===undefined?null:v);},
+ on(p,cb){if(this.mode==='mock')return mockOn(p,cb);return this.fb.onValue(this.r(p),sn=>cb(sn.val()));},
+ async tx(p,fn){if(this.mode==='mock'){const n=fn(mockGet(p));if(n===undefined)return false;mockSet(p,n);return true;}const res=await this.fb.runTransaction(this.r(p),fn);return res.committed;},
+ presence(p){if(this.mode==='fb')this.fb.onDisconnect(this.r(p)).remove();return this.set(p,true);}
+};
+async function netReady(){const ok=await Net.init();if(!ok){$('#netWarn').textContent=FB_CONFIG.databaseURL?'Nejde se připojit. Je tablet na internetu?':'Online hra ještě není nastavená (chybí Firebase).';sfx.tap();}return ok;}
+const myNm=()=>(S.myName||'').trim()||'Hráč';
+function pdata(id,pos){if(id==null)return FILLER(pos);const p=PLAYERS[id];return {id:p.id,name:p.name,pos:p.pos,ovr:p.ovr,st:{...p.st},look:{skin:p.look.skin}};}
+function myPack(){return {name:myNm(),team:SLOTS.map((pos,i)=>pdata(S.team[i],pos)),bench:S.bench.filter(id=>id!=null).map(id=>pdata(id))};}
+function renderDuel(){
+ $('#myName').value=S.myName||'';$('#netWarn').textContent='';
+ const H=Object.entries(S.h2h||{});
+ $('#h2h').innerHTML=H.length?'<div>Vzájemné zápasy</div>'+H.map(([n,r])=>`<div class="hr"><span>proti ${esc(n)}</span><span>✓ ${r.w} · = ${r.d} · ✗ ${r.l}</span></div>`).join(''):'';
+}
+$('#myName').addEventListener('input',e=>{S.myName=e.target.value.trim();save();});
+/* ---- lobby ---- */
+let LB=null;
+function lobbyHtml(h){const L=$('#lobby');L.innerHTML=h;L.classList.add('on');}
+function lobbyHide(){$('#lobby').classList.remove('on');}
+function lobbyCancel(){if(LB){if(LB.unsub)LB.unsub();if(LB.code&&LB.role==='host')Net.set(`bfc/rooms/${LB.code}`,null);}LB=null;lobbyHide();}
+async function duelCreate(kind){
+ if(!S.myName){$('#netWarn').textContent='Nejdřív napiš své jméno.';$('#myName').focus();return;}
+ if(!await netReady())return;sfx.tap();
+ lobbyHtml('<div class="rw">Vytvářím kód…</div>');
+ const me=myPack();let code=null;
+ for(let i=0;i<15&&!code;i++){const c=String(1000+Math.floor(rnd()*9000));
+  try{if(await Net.tx(`bfc/rooms/${c}`,cur=>(!cur||Date.now()-(cur.at||0)>3*3600e3)?{at:Date.now(),kind,seed:1+Math.floor(rnd()*2147483000),host:me}:undefined))code=c;}catch(e){console.warn(e);break;}}
+ if(!code){lobbyHtml('<div class="rw">Nepodařilo se připojit.</div><button class="btn" id="lbX">Zavřít</button>');$('#lbX').onclick=lobbyCancel;return;}
+ Net.presence(`bfc/rooms/${code}/on/host`);
+ LB={code,role:'host',kind};
+ lobbyHtml(`<div class="rw">${kind==='match'?'⚽ Zápas':'🔄 Výměna'} – tvůj kód:</div><div class="code">${code}</div><div class="small" style="font-size:18px">Řekni kód bráchovi. Ať ťukne na „Mám kód“.</div><div class="rw">⏳ Čekám na bráchu…</div><button class="btn sec" id="lbX">Zrušit</button>`);
+ $('#lbX').onclick=()=>{sfx.tap();lobbyCancel();};
+ LB.unsub=Net.on(`bfc/rooms/${code}`,v=>{if(!v||!v.guest||!LB||LB.code!==code)return;const l=LB;l.unsub();LB=null;lobbyHide();launch(kind,code,'host',v);});
+}
+function duelJoinPad(kind){
+ if(!S.myName){$('#netWarn').textContent='Nejdřív napiš své jméno.';$('#myName').focus();return;}
+ sfx.tap();let code='';
+ const draw=(msg='')=>{lobbyHtml(`<div class="rw">Zadej kód od bráchy</div><div class="digits">${[0,1,2,3].map(i=>`<span>${code[i]||''}</span>`).join('')}</div>
+  <div class="small" style="color:#ffb3b3;min-height:22px">${msg}</div>
+  <div class="pad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button data-n="${n}">${n}</button>`).join('')}<button data-n="del" aria-label="Smazat">⌫</button><button data-n="0">0</button><button data-n="x" aria-label="Zavřít">✕</button></div>`);
+  $('#lobby').querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{const n=b.dataset.n;sfx.tap();
+   if(n==='x'){lobbyHide();return;}if(n==='del'){code=code.slice(0,-1);draw();return;}
+   if(code.length<4)code+=n;draw();if(code.length===4)duelJoin(kind,code,draw);});};
+ draw();
+}
+async function duelJoin(kind,code,draw){
+ if(!await netReady()){lobbyHide();return;}
+ let v=null;try{v=await Net.get(`bfc/rooms/${code}`);}catch(e){}
+ if(!v||v.kind!==kind||Date.now()-(v.at||0)>3*3600e3){draw('Tenhle kód nefunguje. Zkus to znovu.');return;}
+ if(v.guest){draw('Tenhle kód už někdo použil.');return;}
+ const me=myPack();await Net.set(`bfc/rooms/${code}/guest`,me);Net.presence(`bfc/rooms/${code}/on/guest`);
+ v.guest=me;lobbyHide();launch(kind,code,'guest',v);
+}
+function launch(kind,code,role,v){
+ sfx.tada();
+ if(kind==='trade'){openTrade(code,role,v);return;}
+ const opp=role==='host'?v.guest.name:v.host.name;let n=3;
+ const tickc=()=>{lobbyHtml(`<div class="rw">⚽ ${esc(myNm())} vs ${esc(opp)}</div><div class="code">${n}</div><div class="small">Zápas začíná…</div>`);
+  if(n===0){lobbyHide();startDuelMatch(v,code,role);return;}n--;setTimeout(tickc,900);};
+ tickc();
+}
+$('#dMatchNew').onclick=()=>duelCreate('match');
+$('#dMatchJoin').onclick=()=>duelJoinPad('match');
+$('#dTradeNew').onclick=()=>duelCreate('trade');
+$('#dTradeJoin').onclick=()=>duelJoinPad('trade');
+/* ---- duel match ---- */
+const OPPCOL='#e8412c';
+function startDuelMatch(v,code,role){
+ const myT=role==='host'?0:1,meP=myT?v.guest:v.host,opP=myT?v.host:v.guest;
+ if(MT&&MT.root){M.scene.remove(MT.root);disposeTree(MT.root);}
+ if(MT&&MT.unsub)MT.unsub();
+ const root=new THREE.Group();M.scene.add(root);
+ const E=createMatch([{players:v.host.team},{players:v.guest.team}],150,mulberry(v.seed));
+ const meshes=E.pl.map(p=>{const m=makePlayer(p.team===myT?MYCOL:OPPCOL,SKIN[p.d.look?p.d.look.skin:1],p.gk);root.add(m);return m;});
+ const ref=makePlayer('#15151a',SKIN[1],false);ref.position.set(3,0,0);root.add(ref);
+ MT={E,root,meshes,ref,opp:{n:opP.name,c:OPPCOL},oppName:opP.name,mode:'duel',myT,flip:myT?-1:1,code,role,acc:0,speed:1,ended:false,outIds:[],selOut:-1,half:false,banT:0,clock:0,buf:[],goalWait:0,goalClock:0,replay:null,
+  myBench:meP.bench||[],oppBench:opP.bench||[],usedBench:new Set(),subLog:[],waitHalf:false,oppGone:false,room:v};
+ MT.unsub=Net.on(`bfc/rooms/${code}`,val=>{if(!MT||MT.code!==code)return;MT.room=val||{};duelCheck();});
+ $('#mHome').textContent=myNm();$('#mAway').textContent=opP.name;$('#mScore').textContent='0 : 0';$('#mMin').textContent="0'";$('#ticker').innerHTML='';
+ $('#mEnd').classList.remove('on');$('#subPanel').classList.remove('on');$('#replayTag').classList.remove('on');$('#match').classList.remove('replaying');
+ $('#speedBtn').textContent='⏩ 1×';$('#subBtn').style.display='none';
+ M.camera.position.set(0,10,17);show('match');sfx.whistle();
+}
+function duelCheck(){
+ if(!MT||MT.mode!=='duel')return;const v=MT.room||{},other=MT.role==='host'?'guest':'host';
+ const gone=!(v.on&&v.on[other]);if(gone!==MT.oppGone){MT.oppGone=gone;if(MT.waitHalf)renderSubs();}
+ if(MT.waitHalf&&v.half&&v.half[other]){
+  const oh=v.half[other],oT=1-MT.myT;
+  (Array.isArray(oh.l)?oh.l:[]).forEach(x=>{const d=MT.oppBench[x.b];if(!d)return;const idx=MT.E.pl.findIndex(q=>q.team===oT&&q.slot===x.s);if(MT.E.sub(oT,x.s,d)&&idx>=0)MT.meshes[idx].userData.head.material.color.set(SKIN[d.look?d.look.skin:1]);});
+  MT.waitHalf=false;$('#subPanel').classList.remove('on');MT.half=false;MT.E.paused=false;MT.E.resume();sfx.whistle();
+ }
+ if(MT.ended&&MT.role==='guest'&&v.res&&v.res.host&&!MT.resChecked){MT.resChecked=true;const h=v.res.host,e=MT.E.score;if(h[0]!==e[0]||h[1]!==e[1])console.warn('desync',h,e);}
+}
+function quitDuel(){if(MT&&MT.unsub)MT.unsub();$('#subPanel').classList.remove('on');MT.ended=true;show('duel');}
+function endDuel(){
+ const T=MT.myT,a=MT.E.score[T],b=MT.E.score[1-T],nm=MT.oppName;
+ Net.set(`bfc/rooms/${MT.code}/res/${MT.role}`,[MT.E.score[0],MT.E.score[1]]);
+ const coins=(a>b?50:a===b?20:10)+a*5;S.coins+=coins;
+ S.h2h=S.h2h||{};const r=S.h2h[nm]||(S.h2h[nm]={w:0,d:0,l:0});if(a>b)r.w++;else if(a===b)r.d++;else r.l++;save();updCoins();
+ const res=a>b?'VÝHRA! 🎉':a===b?'REMÍZA':'PROHRA';
+ setTimeout(()=>{
+  if(a>b){burst(M.scene,new THREE.Vector3(0,3,M.ball.position.z),null,300,8,true);sfx.tada();}
+  const box=$('#mEnd');
+  box.innerHTML=`<div class="small">🤝 Zápas s bráchou</div><div class="big">${res}</div><div class="res">${esc(myNm())} ${a} : ${b} ${esc(nm)}</div><div class="rw">+ 🪙 ${coins}</div><div class="small">Bilance proti ${esc(nm)}: ✓ ${r.w} · = ${r.d} · ✗ ${r.l}</div><button class="btn" id="mCont" style="margin-top:10px;min-width:240px">Pokračovat</button>`;
+  box.classList.add('on');sfx.coin();
+  $('#mCont').onclick=()=>{sfx.tap();if(MT.unsub)MT.unsub();if(MT.role==='host')setTimeout(()=>Net.set(`bfc/rooms/${MT.code}`,null),60000);show('duel');};
+ },1200);
+}
+/* ---- trade ---- */
+let TR=null;
+function openTrade(code,role,v){
+ if(TR&&TR.unsub)TR.unsub();
+ const other=role==='host'?'guest':'host';
+ TR={code,role,other,oppName:(v[other]&&v[other].name)||'Brácha',room:v,applied:new Set(),busy:false};
+ $('#trTitle').textContent='Výměna s '+TR.oppName;
+ Net.set(`bfc/rooms/${code}/tr/${role}`,{o:0,ok:''});
+ TR.unsub=Net.on(`bfc/rooms/${code}`,val=>{if(!TR||TR.code!==code)return;TR.room=val||{};renderTrade();checkTrade();});
+ show('trade');renderTrade();
+}
+const trOffer=who=>{const t=TR&&TR.room&&TR.room.tr&&TR.room.tr[who];return t&&Array.isArray(t.o)?t.o.filter(id=>PLAYERS[id]):[];};
+const trOk=who=>{const t=TR&&TR.room&&TR.room.tr&&TR.room.tr[who];return t?t.ok||'':'';};
+function trHash(){const h=trOffer('host').slice().sort((a,b)=>a-b),g=trOffer('guest').slice().sort((a,b)=>a-b);return (h.length||g.length)?h.join(',')+'|'+g.join(','):'';}
+function setMyTrade(o,ok){Net.set(`bfc/rooms/${TR.code}/tr/${TR.role}`,{o:o.length?o:0,ok:ok||''});}
+function renderTrade(){
+ if(!TR)return;const mine=trOffer(TR.role),theirs=trOffer(TR.other),h=trHash(),meOk=trOk(TR.role)===h&&h,thOk=trOk(TR.other)===h&&h;
+ const M_=$('#trMine');M_.innerHTML='';
+ for(let i=0;i<3;i++){const b=document.createElement('button');b.className='tslot';const id=mine[i];
+  if(id!=null){b.classList.add('filled');b.appendChild(thumb(PLAYERS[id]));const x=document.createElement('span');x.className='x';x.textContent='✕';b.appendChild(x);b.setAttribute('aria-label','Odebrat '+PLAYERS[id].name);b.onclick=()=>{sfx.tap();setMyTrade(mine.filter((_,j)=>j!==i),'');};}
+  else{b.textContent='+';b.setAttribute('aria-label','Přidat kartu');b.onclick=()=>{sfx.tap();openTradePick();};}
+  M_.appendChild(b);}
+ const T_=$('#trTheirs');T_.innerHTML='';
+ for(let i=0;i<3;i++){const d=document.createElement('div');d.className='tslot'+(theirs[i]!=null?' filled':'');if(theirs[i]!=null){const p=PLAYERS[theirs[i]];d.appendChild(thumb(p));d.onclick=()=>openDetail(p);}T_.appendChild(d);}
+ const gone=!(TR.room&&TR.room.on&&TR.room.on[TR.other]);
+ $('#trStatus').textContent=gone?`${TR.oppName} se odpojil.`:!h?'Vyberte karty, které si chcete vyměnit.':meOk&&thOk?'Měním…':meOk?`Čekám, až souhlasí i ${TR.oppName}…`:thOk?`${TR.oppName} souhlasí! Souhlasíš taky?`:'Líbí se ti výměna? Ťukni na Souhlasím.';
+ const ok=$('#trOk');ok.disabled=!h||gone;ok.classList.toggle('on',!!meOk);ok.textContent=meOk?'✅ Souhlasíš (ťukni pro zrušení)':'✅ Souhlasím';
+}
+$('#trOk').onclick=()=>{if(!TR)return;const h=trHash();if(!h)return;sfx.tap();setMyTrade(trOffer(TR.role),trOk(TR.role)===h?'':h);};
+function openTradePick(){
+ const mine=trOffer(TR.role);if(mine.length>=3)return;
+ const G=$('#tpGrid');G.innerHTML='';
+ const list=PLAYERS.filter(p=>(S.owned[p.id]||0)-mine.filter(x=>x===p.id).length>1).sort((a,b)=>b.ovr-a.ovr);
+ if(!list.length)G.innerHTML='<div class="small" style="font-size:20px;grid-column:1/-1">Nemáš žádné dvojky na výměnu.</div>';
+ list.forEach(p=>{const d=document.createElement('button');d.className='tcard';d.appendChild(thumb(p));const b=document.createElement('span');b.className='badge';b.textContent='×'+S.owned[p.id];d.appendChild(b);
+  d.onclick=()=>{sfx.pop();$('#tpick').classList.remove('on');setMyTrade([...trOffer(TR.role),p.id],'');};G.appendChild(d);});
+ $('#tpick').classList.add('on');
+}
+$('#tpClose').onclick=()=>{sfx.tap();$('#tpick').classList.remove('on');};
+function checkTrade(){
+ if(!TR||TR.busy)return;const h=trHash();
+ if(!h||trOk('host')!==h||trOk('guest')!==h||TR.applied.has(h))return;
+ const mine=trOffer(TR.role),theirs=trOffer(TR.other);
+ const need={};mine.forEach(id=>need[id]=(need[id]||0)+1);
+ if(Object.keys(need).some(id=>(S.owned[id]||0)-need[id]<1)){setMyTrade(mine,'');return;}
+ TR.applied.add(h);TR.busy=true;
+ mine.forEach(id=>S.owned[id]--);theirs.forEach(id=>S.owned[id]=(S.owned[id]||0)+1);fillBench();save();sfx.tada();
+ $('#trStatus').textContent='Výměna hotová! 🎉';
+ const got=theirs.map(id=>PLAYERS[id].name).join(', ');
+ lobbyHtml(`<div class="big" style="font-size:44px;color:var(--acc)">Výměna hotová! 🎉</div><div class="rw">Dostal jsi: ${esc(got||'nic')}</div><button class="btn" id="lbX">Super!</button>`);
+ $('#lbX').onclick=()=>{sfx.tap();lobbyHide();};
+ setTimeout(()=>{if(TR){TR.busy=false;setMyTrade([],'');}},1500);
+}
+$('#trBack').onclick=()=>{sfx.tap();if(TR){if(TR.unsub)TR.unsub();Net.set(`bfc/rooms/${TR.code}/tr/${TR.role}`,null);Net.set(`bfc/rooms/${TR.code}/on/${TR.role}`,null);TR=null;}show('duel');};
 
 /* ================= LOOP ================= */
 function resize(){renderer.setSize(innerWidth,innerHeight,false);if(cur)cur.fit(innerWidth/innerHeight);}
