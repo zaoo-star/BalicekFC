@@ -1052,7 +1052,10 @@ function makePlayer(col,skin,gk){
  [-.12,.12].forEach(x=>{const piv=new THREE.Group();piv.position.set(x,.5,0);const l=new THREE.Mesh(new THREE.BoxGeometry(.13,.48,.13),legM);l.position.y=-.24;piv.add(l);g.add(piv);legs.push(piv);});
  g.add(shadow(.38));g.userData={legs,ph:rnd()*6,head};return g;
 }
-function oppStr(i){return Math.min(95,OPP[i].base+(S.season-1)*3);}
+// Soupeři se přizpůsobují: síla = nejlepší síla tvého týmu v této sezóně + posun podle pořadí soupeře
+const OPP_OFF=[-7,-5,-3,-1,1,3,6];
+function teamRef(){const m=myStr();if(!S.ref||m>S.ref){S.ref=m;save();}return S.ref;}
+function oppStr(i){const floor=OPP[i].base+Math.min(15,(S.season-1)*2),adapt=teamRef()+OPP_OFF[i]+Math.floor((S.season-1)/2);return clamp(Math.max(floor,adapt),40,97);}
 function slotEff(i){const id=S.team[i];if(id==null)return 35;const p=PLAYERS[id],need=SLOTS[i];if(p.pos===need)return p.ovr;if(need==='BR'||p.pos==='BR')return p.ovr-25;return p.ovr-8;}
 function myStr(){return Math.round(SLOTS.reduce((a,_,i)=>a+slotEff(i),0)/5);}
 function pickScorer(){const w=[0,1,1,3,6];let x=rnd()*11;for(let i=0;i<5;i++){if(x<w[i])return i;x-=w[i];}return 4;}
@@ -1402,7 +1405,7 @@ function renderLeague(){
    <div class="small">Další sezóna bude těžší – soupeři budou silnější.</div><button id="newSeason" class="btn">Nová sezóna ▶</button>`;
   N.innerHTML=`<div style="font-size:20px;font-weight:800">Liga skončila: ${S.lastPlace}. místo ${S.lastPlace===1?'🏆':''}</div>`+cupHtml;
   if($('#cupPlay'))$('#cupPlay').onclick=()=>{sfx.tap();ac();startMatch('cup');};
-  if($('#newSeason'))$('#newSeason').onclick=()=>{S.season++;S.round=0;S.table=newTable();S.cup=null;save();sfx.tada();renderLeague();};
+  if($('#newSeason'))$('#newSeason').onclick=()=>{S.season++;S.round=0;S.table=newTable();S.cup=null;S.ref=myStr();save();sfx.tada();renderLeague();};
  }
  const rows=sortedTable();
  $('#lgTable').innerHTML=`<tr><th>#</th><th>Tým</th><th>Z</th><th>V</th><th>R</th><th>P</th><th>Skóre</th><th>B</th></tr>`+rows.map((r,i)=>{const me=r.k==='me',nm=me?esc(S.teamName):OPP[r.k].n,c=me?MYCOL:OPP[r.k].c;
