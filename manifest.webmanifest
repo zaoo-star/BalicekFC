@@ -1,0 +1,16 @@
+{
+  "name": "Balíček FC",
+  "short_name": "Balíček FC",
+  "description": "Rozbaluj fotbalové balíčky, skládej tým a vyhraj ligu i pohár.",
+  "start_url": "./balicek-fc.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d3320",
+  "theme_color": "#0d3320",
+  "lang": "cs",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
